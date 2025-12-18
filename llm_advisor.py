@@ -2,7 +2,7 @@ from dotenv import load_dotenv
 from langchain_community.vectorstores import Chroma
 from langchain_huggingface import HuggingFaceEmbeddings
 from langchain_groq import ChatGroq
-from langchain_community.chains import RetrievalQA
+from langchain_classic.chains import RetrievalQA
 import re
 
 load_dotenv()
@@ -13,6 +13,7 @@ vectorstore = Chroma(persist_directory="./rag_db", embedding_function=embedding_
 llm = ChatGroq(model="openai/gpt-oss-120b")
 
 retriever = vectorstore.as_retriever(search_kwargs={"k": 3})
+
 qa_chain = RetrievalQA.from_chain_type(
     llm=llm, 
     retriever=retriever,
